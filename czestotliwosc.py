@@ -5,7 +5,7 @@ import random
 
 class GenPlikuTestowego(object):
     """generator pliku testowego"""
-    testFolder = '.\\testFolder\\'
+    testFolder = '.'+os.sep+'testFolder'+os.sep
 
     def __init__(self):
         super(GenPlikuTestowego, self).__init__()
@@ -14,6 +14,9 @@ class GenPlikuTestowego(object):
         self.skrotyPanstw = ['an', 'de', 'pl', 'fr']
         self.litery = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',\
                 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w', 'q', 'x', 'y', 'z']
+                
+        print self.testFolder
+        os.remove('test.txt')
 
     def czestotliwosc(self, nazwaPliku):
         """funkcja liczaca czestotliwosc wystepowania liter w pliku"""
@@ -46,9 +49,9 @@ class GenPlikuTestowego(object):
         plik.write(tekst + '\n\n')
         plik.close()
     
-    def generuj(self):
+    def generuj(self, dir = testFolder):
         """generuje plik testowy"""
-        pliki = os.listdir(self.testFolder)
+        pliki = os.listdir(dir)
         random.shuffle(pliki)
         self.podsumowanieTestu(str(len([lista for lista in pliki if lista[:2] in self.skrotyPanstw])) +\
                 ' 25 ' + str(len(self.skrotyPanstw)))
