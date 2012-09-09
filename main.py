@@ -12,7 +12,7 @@ from silnik import demo
 from bmmsi_window import BmmsiWindow
 
 if __name__ == '__main__':
-#    demo()
+    demo()
     app = QtGui.QApplication(sys.argv)
     SSN_app = BmmsiWindow()
     SSN_app.show()
