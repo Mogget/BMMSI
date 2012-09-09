@@ -49,10 +49,9 @@ class GenPlikuTestowego(object):
     def generuj(self):
         """generuje plik testowy"""
         pliki = os.listdir(self.testFolder)
-        print pliki
         random.shuffle(pliki)
         self.podsumowanieTestu(str(len([lista for lista in pliki if lista[:2] in self.skrotyPanstw])) +\
-                ' 26 ' + str(len(self.skrotyPanstw)))
+                ' 25 ' + str(len(self.skrotyPanstw)))
         for plik in pliki:
             tekst = ''
             if (plik[:2]) in self.skrotyPanstw:
