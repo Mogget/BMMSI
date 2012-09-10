@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 
 import math
 import random
@@ -21,6 +21,23 @@ def tworzMacierz(I, J, fill=0.0):
     for i in range(I):
         m.append([fill] * J)
     return m
+
+
+def czestotliwosc(tekst):
+    wynik = []
+    suma = 0
+    fLitera = []
+    litery = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',\
+                'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w', 'q', 'x', 'y', 'z']
+    for wartosc in litery:
+        suma += float(tekst.count(wartosc))
+        fLitera.append(float(tekst.count(wartosc)))
+
+    for wartosc in fLitera:
+        wynik.append(wartosc / suma)
+
+    return wynik
+
 
 def sigmoid(x):
     return math.tanh(x)
@@ -61,7 +78,7 @@ class SiecNeuronowa(object):
                     self.liczbaNeuronow[licznik + 1]))
 
     def update(self, wejscie):
-        if len(wejscie) != self.liczbaNeuronow[0] - 1:
+        if len(wejscie) != len(self.liczbaNeuronow) - 1:
             raise ValueError('liczba wejsc pliku testowego jest zla')
 
         # ustawienie progu aktywacji wejscia
@@ -114,7 +131,8 @@ class SiecNeuronowa(object):
         return error
     
     def test(self, wzorzec):
-        print wzorzec, '->', self.update(wzorzec), '\n'
+        for w in wzorzec:
+            print(w[0], '->', self.update(w[0]))
 
     def weights(self):
         print('Input weights:')
@@ -125,57 +143,37 @@ class SiecNeuronowa(object):
         for j in range(self.liczbaNeuronow[-2]):
             print(self.wagi[-1][j])
 
-    def train(self, wzorzec, liczbaEpok=1000, N=0.5, M=0.1):
+    def train(self, wzorzec, liczbaIteracji=1000, N=0.5, M=0.1):
         # N: learning rate
         # M: momentum factor
-        print "maksymalna liczba Epok \t", liczbaEpok
-        indeks = 2
-        testowy = []
-        plik = open(wzorzec)
-        try:
-            plikTestowy = plik.readlines()
-        finally:
-            plik.close()
-
-        while indeks < len(plikTestowy):
-            testowy.append([float(lista) for lista in plikTestowy[indeks].split(' ')[:-1]])
-            indeks += 1
-            testowy.append([int(lista) for lista in plikTestowy[indeks].split(' ')[:-1]])
-            indeks += 2
-
-        for i in range(liczbaEpok):
+        for i in range(liczbaIteracji):
             error = 0.0
-            for p in range(len(testowy))[::2]:
-                try:
-                    wejscie = testowy[p]
-                    cel = testowy[p + 1]
-                except:
-                    pass
+            for p in wzorzec:
+                wejscie = p[0]
+                cel = p[1]
                 self.update(wejscie)
                 error = error + self.backPropagate(cel, N, M)
             if i % 100 == 0:
-                print 'Epoki\t%5d. error: %-.5f' % (i, error)
-        #print wejscie
+                print('error %-.5f' % error)
 
         # self.update(wzorzec[0][0])
 
 
 def demo():
+    # Teach network XOR function
+    pat = [
+        [[0, 0], [0]],
+        [[0, 1], [1]],
+        [[1, 0], [1]],
+        [[1, 1], [0]]
+    ]
 
     # create a network with two input, two hidden, and one output nodes
-    n = SiecNeuronowa(3, [25, 40, 4])
+    n = SiecNeuronowa(3, [2, 2, 1])
     # train it with some patterns
-    n.train("test.txt")
+    n.train(pat)
     # test it
-#TODO: dzialaja tylko znaki ascii ;/
-    tekstDe = 'Ein neuer Renner der Fernsehindustrie heist "Big Brother". Es gengt nicht, da viele Menschen ihre eigene, oft traurige, Realitt verdrngen, indem sie mit bewundernswerter Disziplin die Schicksale der Serienhelden verfolgen. Nein. Die Massen ergtzen sich neuerdings an dem tristen Alltag einiger in einem Container eingeschlossenen Leute. Sie beobachten die neuen Kultfiguren beim Rasieren oder Zhneputzen, hren langweiligen Gesprchen zu und warten auf einen Knller, eine Sensation.'
-    tekstEn = 'If you take a look at the average day of the average family you would be surprised by the amount of time they spend watching TV. Films, quizes, news, soap operas, shows and sport - all in one in a little box in your home that is waiting for you to press the button. There is no doubt about it, TV attracts its viewers in every possible'
-    tekstPl = 'ąęźćńBrytyjski aktor znany z roli Remisa Lupina z filmowej serii przygd Harryego Pottera. David Thewlis wcieli si w posta dilera informacji, znanego jako The Frog. Bohater zaczerpnie swj pseudonim po tym, jak zatruje wod w budynku Kremla przy pomocy egzotycznej aby z Amazonii. W kontynuacji filmu z 2010 roku, ujrzymy znw emerytowanych agentw CIA, w osobach Brucea Willisa, Helen Mirren i Johna Malkoicha, ktrzy uyj swojego dowiadczenia, aby ciga bandytw na terenie Europy. Swj udzia w "Red 2" potwierdzili take Catherine Zeta-Jones i Anthony Hopkins.'
-    tekstFr = 'Bien sur, dit le renard. Tu nes encore pour moi quun petit garon tout semblable a cent mille petits garons. Et je nai pas besoin de toi. Et tu nas pas besoin de moi non plus. Je ne suis pour toi quun renard semblable a cent mille renards. Mais, si tu mapprioises, nous aurons besoin lun de lutre. Tu seras pour moi unique au monde. Je serai pour toi unique au monde'
-    n.test(czestotliwosc(tekstEn))
-    n.test(czestotliwosc(tekstDe))
-    n.test(czestotliwosc(tekstPl))
-    n.test(czestotliwosc(tekstFr))
+    n.test(pat)
 
 
 if __name__ == '__main__':
