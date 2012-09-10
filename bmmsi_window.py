@@ -7,7 +7,7 @@ Created on Sun Sep  9 18:13:31 2012
 
 from PyQt4 import QtGui
 from PyQt4.QtGui import QWidget
-from czestotliwosc import GenPlikuTestowego
+from czest import GenPlikuTestowego
 
 from bmmsi_ui import Ui_Form
 
@@ -23,8 +23,6 @@ class BmmsiWindow(QWidget):
     def chooseFolder(self):
         dir = QtGui.QFileDialog.getExistingDirectory()
         self.ui.o_zbiorTreningowy.setText(dir)
-        #dialog.show()
-        #dialog.exec()
         
     def generateTrainSet(self):
         gen = GenPlikuTestowego()
