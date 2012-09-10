@@ -31,7 +31,8 @@ class GenratorPlikuTestowego(object):
         self.suma = float(0)
 
         # usuwanie starego pliku
-        #os.remove(PLIK_TRENINGOWY)
+        if os.path.exists(PLIK_TRENINGOWY):
+            os.remove(PLIK_TRENINGOWY)
 
     def obliczCzestotliwoscPliku(self, nazwa_pliku):
         with open(self.testFolder + nazwa_pliku) as f:

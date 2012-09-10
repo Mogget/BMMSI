@@ -35,7 +35,7 @@ class SSN(object):
     
 
     def __init__(self, liczbaWarstw, liczbaNeuronow=[]):
-        super(SiecNeuronowa, self).__init__()
+        super(SSN, self).__init__()
         self.liczbaNeuronow = liczbaNeuronow
         self.liczbaNeuronow[0] += 1     # nie wiem czemu
 
@@ -172,7 +172,7 @@ class SSN(object):
 def demo():
 
     # create a network with two input, two hidden, and one output nodes
-    n = SSN(3, [25, 40, 4])
+    n = SSN(4, [25, 40, 40, 4])
     # train it with some patterns
     n.train("test.txt")
     # test it
