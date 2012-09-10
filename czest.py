@@ -23,7 +23,7 @@ def czestotliwosc(tekst):
 
 class GenratorPlikuTestowego(object):
     """generator pliku testowego"""
-    testFolder = '.'+os.sep+'testFolder'+os.sep
+    testFolder = '.' + os.sep + 'testFolder' + os.sep
 
     def __init__(self):
         super(GenratorPlikuTestowego, self).__init__()
@@ -40,7 +40,6 @@ class GenratorPlikuTestowego(object):
             self.czest_liter = czestotliwosc(zawartosc)
             self.wyjscie()
 
-
     def wyjscie(self):
         """funkcja zwracajaca plik wynikowy"""
         tekst = str()
@@ -53,20 +52,19 @@ class GenratorPlikuTestowego(object):
 
         self.czest_liter = []
 
-
     def podsumowanieTestu(self, tekst):
         """docstring for posumowanieTestu"""
         with open(PLIK_TRENINGOWY, 'a') as plik:
             plik.write(tekst + '\n\n')
   
-    def generuj(self, dir = testFolder):
+    def generuj(self, dir=testFolder):
         """generuje plik testowy"""
         pliki_testowe = os.listdir(dir)
         #FIXME: co robi te shuffle tu?
         random.shuffle(pliki_testowe)
-        #Fixme tej linii nie rozumiem 
+        #FIXME: tej linii nie rozumiem
         self.podsumowanieTestu(str(len([lista for lista in pliki_testowe if lista[:2] in skroty_panstw])) +\
-                ' 25 ' + str(len(skroty_panstw)))
+                ' ' + str(len(obslugiwane_litery)) + ' ' + str(len(skroty_panstw)))
         
         for plik in pliki_testowe:
             tekst = ''
