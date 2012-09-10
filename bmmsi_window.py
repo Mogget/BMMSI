@@ -55,7 +55,7 @@ class BmmsiWindow(QWidget):
 
     def testCustomText(self):
         print str(self.ui.i_tekstWejsciowy.toPlainText())
-        wyn = self.siec_neuronowa.test(czestotliwosc( self.ui.i_tekstWejsciowy.toPlainText()  ) )
+        wyn = self.siec_neuronowa.test(czestotliwosc( self.ui.i_tekstWejsciowy.toPlainText().encode('utf-8')  ) )
         self.ui.o_en.setValue(wyn[0]*100)
         self.ui.o_de.setValue(wyn[1]*100)
         self.ui.o_pl.setValue(wyn[2]*100)

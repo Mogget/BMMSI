@@ -16,6 +16,10 @@ from bmmsi_window import BmmsiWindow
 
 if __name__ == '__main__':
     #demo()
+    
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
+    
     app = QtGui.QApplication(sys.argv)
     SSN_app = BmmsiWindow()
     SSN_app.show()
