@@ -21,7 +21,9 @@ class BmmsiWindow(QWidget):
         self.ui.setupUi(self)
         self.ui.ib_zbiorTreningowy.clicked.connect(self.chooseFolder)
         self.ui.ib_zbudujTrenujSiec.clicked.connect(self.generateTrainSet)
+        self.ui.ib_testuj.clicked.connect(self.testCustomText)
         self.ui.o_zbiorTreningowy.setText(QDir.currentPath()+QDir.separator()+u"testFolder")
+        
         
         self.siec_neuronowa = None
         
@@ -40,6 +42,7 @@ class BmmsiWindow(QWidget):
         self.siec_neuronowa = SSN( 2 + self.ui.i_iloscWarstwUkrytych.value(), 
                                   # wejściowa + wyjściowa + ukryte
                                   [ 25,
+                                  #Tu musi być liczba warstw ukrytych każda po ilość neuronów
                                    self.ui.i_liczbaNeuronowWarstwaUkryta.value(),
                                     4,                                
                                   ]
@@ -54,7 +57,18 @@ class BmmsiWindow(QWidget):
         tekstEn = 'If you take a look at the average day of the average family you would be surprised by the amount of time they spend watching TV. Films, quizes, news, soap operas, shows and sport - all in one in a little box in your home that is waiting for you to press the button. There is no doubt about it, TV attracts its viewers in every possible'
         tekstPl = 'ąęźćńBrytyjski aktor znany z roli Remisa Lupina z filmowej serii przygd Harryego Pottera. David Thewlis wcieli si w posta dilera informacji, znanego jako The Frog. Bohater zaczerpnie swj pseudonim po tym, jak zatruje wod w budynku Kremla przy pomocy egzotycznej aby z Amazonii. W kontynuacji filmu z 2010 roku, ujrzymy znw emerytowanych agentw CIA, w osobach Brucea Willisa, Helen Mirren i Johna Malkoicha, ktrzy uyj swojego dowiadczenia, aby ciga bandytw na terenie Europy. Swj udzia w "Red 2" potwierdzili take Catherine Zeta-Jones i Anthony Hopkins.'
         tekstFr = 'Bien sur, dit le renard. Tu nes encore pour moi quun petit garon tout semblable a cent mille petits garons. Et je nai pas besoin de toi. Et tu nas pas besoin de moi non plus. Je ne suis pour toi quun renard semblable a cent mille renards. Mais, si tu mapprioises, nous aurons besoin lun de lutre. Tu seras pour moi unique au monde. Je serai pour toi unique au monde'
-        self.siec_neuronowa.test(czestotliwosc(tekstEn))
-        self.siec_neuronowa.test(czestotliwosc(tekstDe))
-        self.siec_neuronowa.test(czestotliwosc(tekstPl))
-        self.siec_neuronowa.test(czestotliwosc(tekstFr))
+        #self.siec_neuronowa.test(czestotliwosc(tekstEn))
+        #self.siec_neuronowa.test(czestotliwosc(tekstDe))
+        #self.siec_neuronowa.test(czestotliwosc(tekstPl))
+        #wyn = self.siec_neuronowa.test(czestotliwosc(tekstFr))
+        
+
+            
+    def testCustomText(self):
+        print str(self.ui.i_tekstWejsciowy.toPlainText())
+        wyn = self.siec_neuronowa.test(czestotliwosc( str( self.ui.i_tekstWejsciowy.toPlainText() ) ) )
+        self.ui.o_en.setValue(wyn[0]*100)
+        self.ui.o_de.setValue(wyn[1]*100)
+        self.ui.o_pl.setValue(wyn[2]*100)
+        self.ui.o_fr.setValue(wyn[3]*100)
+        

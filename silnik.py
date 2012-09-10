@@ -122,6 +122,7 @@ class SSN(object):
 
     def test(self, wzorzec):
         print wzorzec, '->', self.update(wzorzec), '\n'
+        return self.update(wzorzec)
 
 
     def weights(self):
