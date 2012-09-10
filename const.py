@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+PLIK_TRENINGOWY = 'test.txt'
+
 skroty_panstw = ('en', 'de', 'pl', 'fr')
 
 nazwy_jezykow = {
