@@ -59,12 +59,15 @@ class GenratorPlikuTestowego(object):
   
     def generuj(self, dir=testFolder):
         """generuje plik testowy"""
-        pliki_testowe = os.listdir(dir)
-        #FIXME: co robi te shuffle tu?
-        random.shuffle(pliki_testowe)
-        #FIXME: tej linii nie rozumiem
-        self.podsumowanieTestu(str(len([lista for lista in pliki_testowe if lista[:2] in skroty_panstw])) +\
-                ' ' + str(len(obslugiwane_litery)) + ' ' + str(len(skroty_panstw)))
+        pliki_testowe = os.listdir(dir)   
+        self.podsumowanieTestu(str(
+            len([lista for lista in pliki_testowe if lista[:2] in skroty_panstw])
+            ) + ' ' + str(
+            len(obslugiwane_litery)
+            ) + ' ' + str(
+            len(skroty_panstw)
+            )
+        )
         
         for plik in pliki_testowe:
             tekst = ''
