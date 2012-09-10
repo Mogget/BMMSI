@@ -4,6 +4,9 @@ import math
 import random
 #import string
 
+from const import obslugiwane_litery
+from czest import czestotliwosc
+
 random.seed(0)
 
 
@@ -18,23 +21,6 @@ def tworzMacierz(I, J, fill=0.0):
     for i in range(I):
         m.append([fill] * J)
     return m
-
-
-def czestotliwosc(tekst):
-    wynik = []
-    suma = 0
-    fLitera = []
-    litery = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',\
-                'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w', 'q', 'x', 'y', 'z']
-    for wartosc in litery:
-        suma += float(tekst.count(wartosc))
-        fLitera.append(float(tekst.count(wartosc)))
-
-    for wartosc in fLitera:
-        wynik.append(wartosc / suma)
-
-    return wynik
-
 
 def sigmoid(x):
     return math.tanh(x)

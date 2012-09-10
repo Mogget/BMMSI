@@ -2,6 +2,21 @@
 import os
 import random
 
+from const import obslugiwane_litery, skroty_panstw
+
+def czestotliwosc(tekst):
+    suma = 0
+    wynik = []
+    fLitera = []
+
+    for wartosc in obslugiwane_litery:
+        suma += float(tekst.count(wartosc))
+        fLitera.append(float(tekst.count(wartosc)))
+
+    for wartosc in fLitera:
+        wynik.append(wartosc / suma)
+
+    return wynik
 
 class GenPlikuTestowego(object):
     """generator pliku testowego"""
@@ -11,22 +26,20 @@ class GenPlikuTestowego(object):
         super(GenPlikuTestowego, self).__init__()
         self.fLiter = {}      # czestotliwosc liter
         self.suma = .0
-        self.skrotyPanstw = ['an', 'de', 'pl', 'fr']
-        self.litery = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',\
-                'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'w', 'q', 'x', 'y', 'z']
-                
+
         print self.testFolder
         os.remove('test.txt')
 
-    def czestotliwosc(self, nazwaPliku):
+    def czestotliwoscPliku(self, nazwaPliku):
         """funkcja liczaca czestotliwosc wystepowania liter w pliku"""
+        #FIXME: tu użycie funckcji czestoliwosc
         plik = open(self.testFolder + nazwaPliku)
         try:
             tekst = plik.read()
         finally:
             plik.close()
         tekst.lower()
-        for litera in self.litery:
+        for litera in obslugiwane_litery:
             self.fLiter[litera] = (tekst.count(litera))
         for ile in self.fLiter.values():
             self.suma += float(ile)
@@ -36,7 +49,7 @@ class GenPlikuTestowego(object):
         """funkcja zwracajaca plik wynikowy"""
         plik = open('test.txt', 'a')
         tekst = ''
-        for wartosc in self.litery:
+        for wartosc in obslugiwane_litery:
             tekst += str(float(self.fLiter[wartosc]) / self.suma) + ' '
         plik.write(tekst + '\n')
         plik.close()
@@ -53,12 +66,12 @@ class GenPlikuTestowego(object):
         """generuje plik testowy"""
         pliki = os.listdir(dir)
         random.shuffle(pliki)
-        self.podsumowanieTestu(str(len([lista for lista in pliki if lista[:2] in self.skrotyPanstw])) +\
+        self.podsumowanieTestu(str(len([lista for lista in pliki if lista[:2] in skroty_panstw])) +\
                 ' 25 ' + str(len(self.skrotyPanstw)))
         for plik in pliki:
             tekst = ''
             if (plik[:2]) in self.skrotyPanstw:
-                self.czestotliwosc(plik)
+                self.czestotliwoscPliku(plik)
                 for ilePanstw in range(len(self.skrotyPanstw)):
                     if ilePanstw == self.skrotyPanstw.index(plik[:2]):
                         tekst += '1 '
