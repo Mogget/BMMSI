@@ -12,12 +12,16 @@ random.seed(0)
 
 
 def losuj(a, b):
+    """ 
+    funkcja losująca liczby wykorzystywana do
+    uzupelnienia macierzy wag poczatkowych
+    
+    """
     return (b - a) * random.random() + a
 
 
-# TODO: do spolszczenia
-# tworzy macierz polaczen
 def tworzMacierz(I, J, fill=0.0):
+    """ Tworzy macierz polaczen """
     m = []
     for i in range(I):
         m.append([fill] * J)
@@ -28,6 +32,7 @@ def sigmoid(x):
 
 
 def dsigmoid(y):
+    """ liczy blad kwadratowy """
     return 1.0 - y ** 2
 
 
@@ -43,11 +48,12 @@ class SSN(QObject):
     
 
     def __init__(self, liczbaWarstw, liczbaNeuronow=[]):
+        """ konstruktor, tworzac obiekt tworzymy siec """
         super(SSN, self).__init__()
         self.liczbaNeuronow = liczbaNeuronow
         self.liczbaNeuronow[0] += 1     # nie wiem czemu
 
-        # prog aktywacji dla wezla
+        # lista z progami aktywacji dla wezla
         self.progAktywacji = []
         for neuron in self.liczbaNeuronow:
             self.progAktywacji.append([1.0] * neuron)
@@ -62,10 +68,9 @@ class SSN(QObject):
         for neuron in range(len(self.liczbaNeuronow) - 1):
             for i in range(self.liczbaNeuronow[neuron]):
                 for j in range(self.liczbaNeuronow[neuron + 1]):
-                    #TODO: inne losowanie jest w bpnn ale to i tak nie powinno miec zwiazku
                     self.wagi[neuron][i][j] = losuj(-0.2, 0.2)
 
-        # last change in weights for momentum
+        # ostatnia zmiana wag dla momentum
         self.zmianaWagi = []
         for licznik in range(len(self.liczbaNeuronow) - 1):
             self.zmianaWagi.append(tworzMacierz(self.liczbaNeuronow[licznik],\
@@ -95,16 +100,17 @@ class SSN(QObject):
 
     def backPropagate(self, cel, N, M):
         if len(cel) != self.liczbaNeuronow[-1]:
-            raise ValueError('wrong number of target values')
+            raise ValueError('niepoprawna liczba wejsc w pliku testowym\
+                    lub w tworzonej sieci')
 
         delta = []
-        # calculate error terms for output
+        # obliczanie błędu dla wyjsc
         delta.append([0.0] * self.liczbaNeuronow[-1])
         for k in range(self.liczbaNeuronow[-1]):
             error = cel[k] - self.progAktywacji[-1][k]
             delta[0][k] = dsigmoid(self.progAktywacji[-1][k]) * error
 
-        # calculate error terms for hidden
+        # obliczanie bledu dla warst ukrytych
         for licznik in range(len(self.liczbaNeuronow[1: -1])):
             delta.append([0.0] * self.liczbaNeuronow[-2 - licznik])
             for j in range(self.liczbaNeuronow[-2 - licznik]):
@@ -113,16 +119,15 @@ class SSN(QObject):
                     error = error + delta[-2][k] * self.wagi[-1 - licznik][j][k]
                 delta[-1][j] = dsigmoid(self.progAktywacji[-2 - licznik][j]) * error
 
-        # update output weights
+        # aktualizacja wag
         for licznik in range(len(self.liczbaNeuronow[: -1])):
             for j in range(self.liczbaNeuronow[-2 - licznik]):
                 for k in range(self.liczbaNeuronow[-1 - licznik]):
                     change = delta[licznik][k] * self.progAktywacji[-2 - licznik][j]
                     self.wagi[-1 - licznik][j][k] = self.wagi[-1 - licznik][j][k] + N * change + M * self.zmianaWagi[-1 - licznik][j][k]
                     self.zmianaWagi[-1 - licznik][j][k] = change
-                    #print N*change, M*self.co[j][k]
 
-        # calculate error
+        # obliczanie bledu sredniokwadratowego
         error = 0.0
         for k in range(len(cel)):
             error = error + 0.5 * (cel[k] - self.progAktywacji[-1][k]) ** 2
@@ -131,7 +136,7 @@ class SSN(QObject):
 
     def test(self, wzorzec):
         wynik = self.update(wzorzec)
-        print wzorzec, '->', wynik, '\n'
+        #print wzorzec, '->', wynik, '\n'
        
         self.tekst_na_log.emit( 'Angielski: ' + str(wynik[0]) )
         self.tekst_na_log.emit( 'Niemiecki: ' + str(wynik[1]) )
@@ -140,19 +145,19 @@ class SSN(QObject):
         return wynik
 
 
-    def weights(self):
-        print('Input weights:')
+    def wagi(self):
+        print('Wagi wejsciowe:')
         for i in range(self.liczbaNeuronow[0]):
             print(self.wagi[0][i])
         print()
-        print('Output weights:')
+        print('Wagi wyjsciowe:')
         for j in range(self.liczbaNeuronow[-2]):
             print(self.wagi[-1][j])
 
 
     def train(self, wzorzec, liczbaEpok=1000, N=0.5, M=0.1, min_blad=0.3):
-        # N: learning rate
-        # M: momentum factor
+        # N: intensywność nauki
+        # M: współczynnik pędu (momentum)
         indeks = 2
         testowy = []
         plik = open(wzorzec)
@@ -161,12 +166,14 @@ class SSN(QObject):
         finally:
             plik.close()
 
+        # obrabia wczytane z pliku dane tekstowe
         while indeks < len(plikTestowy):
             testowy.append([float(lista) for lista in plikTestowy[indeks].split(' ')[:-1]])
             indeks += 1
             testowy.append([int(lista) for lista in plikTestowy[indeks].split(' ')[:-1]])
             indeks += 2
 
+        # w petli uczy wszystkie dane testowe i zlicza bledy
         for i in range(liczbaEpok):
             error = 0.0
             for p in range(len(testowy))[::2]:
@@ -181,6 +188,7 @@ class SSN(QObject):
             if error <= min_blad:
                 break
                 
+            # co 50 epok wyswietla blad
             if i % 50 == 0:
                 self.tekst_na_log.emit( 'Epoka: \t%5d error: %-.5f' % (i, error) )
             if i == liczbaEpok-1:
