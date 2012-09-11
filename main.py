@@ -12,11 +12,9 @@ import sys
 
 from PyQt4 import QtGui
 
-from silnik import demo
 from bmmsi_window import BmmsiWindow
 
 if __name__ == '__main__':
-    #demo()
     
     reload(sys)
     sys.setdefaultencoding("utf-8")

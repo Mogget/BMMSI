@@ -58,6 +58,8 @@ class BmmsiWindow(QWidget):
                                   N=self.ui.i_wspolczynnikUczenia.value(),
                                   M=self.ui.i_wspolczynnikMomentum.value(),
                                   min_blad = self.ui.i_limiWartosciBledu.value() )
+                                  
+        self.ui.ib_testuj.setEnabled(True)
                                  
 
     def testCustomText(self):

@@ -6,7 +6,6 @@ import random
 
 from PyQt4.QtCore import QObject, pyqtSignal
 
-from const import obslugiwane_litery
 from czest import czestotliwosc
 
 random.seed(0)
@@ -33,7 +32,12 @@ def dsigmoid(y):
 
 
 class SSN(QObject):
-    """docstring for SiecNeuronowa"""
+    """
+    Klasa Sztucznej Sieci Neuronowej
+    uczącej się za pomocą algorymu propagacji wstecznej
+    
+        
+    """
     
     tekst_na_log = pyqtSignal("QString", name="logEntry")
     
@@ -128,13 +132,7 @@ class SSN(QObject):
     def test(self, wzorzec):
         wynik = self.update(wzorzec)
         print wzorzec, '->', wynik, '\n'
-        #self.tekst_na_log.emit( str(wzorzec)+ '->'+ str(self.update(wzorzec))) 
-        
-        #self.tekst_na_log.emit( 'Angielski: .5f ' % (float(wynik[0]),)  )
-        #self.tekst_na_log.emit( 'Niemiecki: .5f ' % (float(wynik[1]),) )
-        #self.tekst_na_log.emit( 'Polski:    .5f ' % (float(wynik[2]),) )
-        #self.tekst_na_log.emit( 'Francuski: .5f ' % (float(wynik[3]),) )
-        
+       
         self.tekst_na_log.emit( 'Angielski: ' + str(wynik[0]) )
         self.tekst_na_log.emit( 'Niemiecki: ' + str(wynik[1]) )
         self.tekst_na_log.emit( 'Polski:    ' + str(wynik[2]) )
@@ -195,17 +193,20 @@ class SSN(QObject):
 
 
 def demo():
-
-    # create a network with two input, two hidden, and one output nodes
+    # Wersja demo silnika, bez GUI
+    # Sieć z 4 warstawami
+    # 25 - warswa wejściowa - czestoliwosc alfabetu lacinksiego
+    # 2 x warstwa ukryta po 40 znakow
+    # 4 neurony warstwy wyjsciowej 
     n = SSN(4, [25, 40, 40, 4])
-    # train it with some patterns
+    # plik treningowy
     n.train("test.txt")
-    # test it
-#TODO: dzialaja tylko znaki ascii ;/
+    # Teksty testowe
     tekstDe = 'Ein neuer Renner der Fernsehindustrie heist "Big Brother". Es gengt nicht, da viele Menschen ihre eigene, oft traurige, Realitt verdrngen, indem sie mit bewundernswerter Disziplin die Schicksale der Serienhelden verfolgen. Nein. Die Massen ergtzen sich neuerdings an dem tristen Alltag einiger in einem Container eingeschlossenen Leute. Sie beobachten die neuen Kultfiguren beim Rasieren oder Zhneputzen, hren langweiligen Gesprchen zu und warten auf einen Knller, eine Sensation.'
     tekstEn = 'If you take a look at the average day of the average family you would be surprised by the amount of time they spend watching TV. Films, quizes, news, soap operas, shows and sport - all in one in a little box in your home that is waiting for you to press the button. There is no doubt about it, TV attracts its viewers in every possible'
     tekstPl = 'ąęźćńBrytyjski aktor znany z roli Remisa Lupina z filmowej serii przygd Harryego Pottera. David Thewlis wcieli si w posta dilera informacji, znanego jako The Frog. Bohater zaczerpnie swj pseudonim po tym, jak zatruje wod w budynku Kremla przy pomocy egzotycznej aby z Amazonii. W kontynuacji filmu z 2010 roku, ujrzymy znw emerytowanych agentw CIA, w osobach Brucea Willisa, Helen Mirren i Johna Malkoicha, ktrzy uyj swojego dowiadczenia, aby ciga bandytw na terenie Europy. Swj udzia w "Red 2" potwierdzili take Catherine Zeta-Jones i Anthony Hopkins.'
     tekstFr = 'Bien sur, dit le renard. Tu nes encore pour moi quun petit garon tout semblable a cent mille petits garons. Et je nai pas besoin de toi. Et tu nas pas besoin de moi non plus. Je ne suis pour toi quun renard semblable a cent mille renards. Mais, si tu mapprioises, nous aurons besoin lun de lutre. Tu seras pour moi unique au monde. Je serai pour toi unique au monde'
+    # Sprawdzenie języka    
     n.test(czestotliwosc(tekstEn))
     n.test(czestotliwosc(tekstDe))
     n.test(czestotliwosc(tekstPl))

@@ -286,7 +286,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QPlainTextEdit" name="o_log"/>
+      <widget class="QPlainTextEdit" name="o_log">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -308,6 +312,9 @@
       </item>
       <item row="2" column="0">
        <widget class="QPushButton" name="ib_testuj">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Testuj</string>
         </property>

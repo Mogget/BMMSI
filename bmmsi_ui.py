@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'bmmsi.ui'
 #
-# Created: Tue Sep 11 19:35:55 2012
+# Created: Tue Sep 11 20:28:54 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -134,6 +134,7 @@ class Ui_Form(object):
         self.label_11.setObjectName(_fromUtf8("label_11"))
         self.verticalLayout_3.addWidget(self.label_11)
         self.o_log = QtGui.QPlainTextEdit(Form)
+        self.o_log.setReadOnly(True)
         self.o_log.setObjectName(_fromUtf8("o_log"))
         self.verticalLayout_3.addWidget(self.o_log)
         self.gridLayout_3.addLayout(self.verticalLayout_3, 2, 0, 1, 2)
@@ -148,6 +149,7 @@ class Ui_Form(object):
         self.i_tekstWejsciowy.setObjectName(_fromUtf8("i_tekstWejsciowy"))
         self.gridLayout_2.addWidget(self.i_tekstWejsciowy, 1, 0, 1, 1)
         self.ib_testuj = QtGui.QPushButton(self.groupBox_3)
+        self.ib_testuj.setEnabled(False)
         self.ib_testuj.setObjectName(_fromUtf8("ib_testuj"))
         self.gridLayout_2.addWidget(self.ib_testuj, 2, 0, 1, 1)
         self.label_10 = QtGui.QLabel(self.groupBox_3)
