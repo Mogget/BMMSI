@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Sep  9 18:13:31 2012
+Główny plik. Uruchamiający program.
 
-@author: bzyx
+
 """
+
 import sys
 
 # Odkomentować przed wysłaniem do repozytorium
@@ -15,6 +16,9 @@ from PyQt4 import QtGui
 from bmmsi_window import BmmsiWindow
 
 if __name__ == '__main__':
+    """
+    Uruchomienie aplikacji i przekazanie działania do Qt
+    """
     
     reload(sys)
     sys.setdefaultencoding("utf-8")

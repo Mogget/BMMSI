@@ -1,22 +1,34 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Sep  9 18:13:31 2012
 
-@author: bzyx
+Obsługa okna użytkownika
+
 """
 
 from datetime import datetime
 
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir
-from PyQt4.QtGui import QWidget
-from czest import GenratorPlikuTestowego, czestotliwosc
+from PyQt4.QtGui import QWidget, QMessageBox
 
 from bmmsi_ui import Ui_Form
+from czest import GenratorPlikuTestowego, czestotliwosc
 from silnik import SSN
 
 class BmmsiWindow(QWidget):
+    """
+    Klasa obsługi interfejsu graficznego.
+    Tworzy i zarządza oknem apliakcji.
+    
+    """
+    
+    
     def __init__(self, parent=None):
+        """
+        Konstruktor klasy okna.
+        Tworzy okno widoczne na ekranie i połączenia przycisków w stylu Qt.
+        
+        """
         QtGui.QWidget.__init__(self, parent)
 
         self.ui = Ui_Form()
@@ -24,16 +36,32 @@ class BmmsiWindow(QWidget):
         self.ui.ib_zbiorTreningowy.clicked.connect(self.chooseFolder)
         self.ui.ib_zbudujTrenujSiec.clicked.connect(self.generateTrainSet)
         self.ui.ib_testuj.clicked.connect(self.testCustomText)
-        self.ui.o_zbiorTreningowy.setText(QDir.currentPath()+QDir.separator()+u"testFolder")
+        self.ui.o_zbiorTreningowy.setText(
+            QDir.currentPath()+QDir.separator()+u"testFolder")
         
-        
+        # Na początku nie mamy zadnej sieci
         self.siec_neuronowa = None
         
+        
     def chooseFolder(self):
+        """ 
+        Obsluga wyboru polozenia katalogu z danymi testowymi
+        
+        """
         dir = QtGui.QFileDialog.getExistingDirectory()
         self.ui.o_zbiorTreningowy.setText(dir)
         
+        
     def generateTrainSet(self):
+        """
+        Gerneruje zestaw treningowy.
+        Przeprowadza naukę sieci neuronowej.
+        Parametry treningu sieci są pobierane z elementów GUI.
+
+        Uwaga: Każdorazowo sieć tworzona jest na nowo.
+        
+        """
+        
         gen = GenratorPlikuTestowego()
         gen.generuj(self.ui.o_zbiorTreningowy.text())
         
@@ -63,7 +91,15 @@ class BmmsiWindow(QWidget):
                                  
 
     def testCustomText(self):
-        print str(self.ui.i_tekstWejsciowy.toPlainText())
+        """
+        Przeprowadza test dla wprowadzonego tekstu.
+        
+        """
+        
+        if len(self.ui.i_tekstWejsciowy.toPlainText()) == 0:
+            QMessageBox.warning(None, "BMMSI", u"Należy podać tekst.")
+            return
+
         wyn = self.siec_neuronowa.test(czestotliwosc( self.ui.i_tekstWejsciowy.toPlainText()  ) )
         self.ui.o_en.setValue(wyn[0]*100)
         self.ui.o_de.setValue(wyn[1]*100)
@@ -71,5 +107,9 @@ class BmmsiWindow(QWidget):
         self.ui.o_fr.setValue(wyn[3]*100)
         
     def addLineToLog(self, what):
+        """
+        Dodaje informacje do pola "log"
+        
+        """
         self.ui.o_log.appendPlainText('['+str(datetime.now())+'] ' + what)
         
