@@ -4,6 +4,8 @@ import math
 import random
 #import string
 
+from PyQt4.QtCore import QObject, pyqtSignal
+
 from const import obslugiwane_litery
 from czest import czestotliwosc
 
@@ -30,8 +32,10 @@ def dsigmoid(y):
     return 1.0 - y ** 2
 
 
-class SSN(object):
+class SSN(QObject):
     """docstring for SiecNeuronowa"""
+    
+    tekst_na_log = pyqtSignal("QString", name="logEntry")
     
 
     def __init__(self, liczbaWarstw, liczbaNeuronow=[]):
@@ -65,6 +69,7 @@ class SSN(object):
 
 
     def update(self, wejscie):
+        
         if len(wejscie) != self.liczbaNeuronow[0] - 1:
             raise ValueError('liczba wejsc pliku testowego jest zla')
 
@@ -121,8 +126,20 @@ class SSN(object):
     
 
     def test(self, wzorzec):
-        print wzorzec, '->', self.update(wzorzec), '\n'
-        return self.update(wzorzec)
+        wynik = self.update(wzorzec)
+        print wzorzec, '->', wynik, '\n'
+        #self.tekst_na_log.emit( str(wzorzec)+ '->'+ str(self.update(wzorzec))) 
+        
+        #self.tekst_na_log.emit( 'Angielski: .5f ' % (float(wynik[0]),)  )
+        #self.tekst_na_log.emit( 'Niemiecki: .5f ' % (float(wynik[1]),) )
+        #self.tekst_na_log.emit( 'Polski:    .5f ' % (float(wynik[2]),) )
+        #self.tekst_na_log.emit( 'Francuski: .5f ' % (float(wynik[3]),) )
+        
+        self.tekst_na_log.emit( 'Angielski: ' + str(wynik[0]) )
+        self.tekst_na_log.emit( 'Niemiecki: ' + str(wynik[1]) )
+        self.tekst_na_log.emit( 'Polski:    ' + str(wynik[2]) )
+        self.tekst_na_log.emit( 'Francuski: ' + str(wynik[3]) )
+        return wynik
 
 
     def weights(self):
@@ -138,7 +155,6 @@ class SSN(object):
     def train(self, wzorzec, liczbaEpok=1000, N=0.5, M=0.1):
         # N: learning rate
         # M: momentum factor
-        print "maksymalna liczba Epok \t", liczbaEpok
         indeks = 2
         testowy = []
         plik = open(wzorzec)
@@ -163,6 +179,9 @@ class SSN(object):
                     pass
                 self.update(wejscie)
                 error = error + self.backPropagate(cel, N, M)
+                
+            if i % 50 == 0:
+                self.tekst_na_log.emit( 'Epoka: \t%5d error: %-.5f' % (i, error) )
             if i % 100 == 0:
                 print 'Epoki\t%5d. error: %-.5f' % (i, error)
         #print wejscie

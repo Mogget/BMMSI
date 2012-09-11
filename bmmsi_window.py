@@ -5,6 +5,8 @@ Created on Sun Sep  9 18:13:31 2012
 @author: bzyx
 """
 
+from datetime import datetime
+
 from PyQt4 import QtGui
 from PyQt4.QtCore import QDir
 from PyQt4.QtGui import QWidget
@@ -48,10 +50,14 @@ class BmmsiWindow(QWidget):
         self.siec_neuronowa = SSN( 2 + self.ui.i_iloscWarstwUkrytych.value(), 
                                   ssn_params,
                                   )
+                                  
+        self.siec_neuronowa.logEntry.connect(self.addLineToLog)
+        
         self.siec_neuronowa.train((QDir.currentPath()+QDir.separator()+"test.txt"),
                                   liczbaEpok=self.ui.i_liczbaEpok.value(),
                                   N=self.ui.i_wspolczynnikUczenia.value(),
                                   M=self.ui.i_wspolczynnikMomentum.value())
+                                 
 
     def testCustomText(self):
         print str(self.ui.i_tekstWejsciowy.toPlainText())
@@ -60,4 +66,7 @@ class BmmsiWindow(QWidget):
         self.ui.o_de.setValue(wyn[1]*100)
         self.ui.o_pl.setValue(wyn[2]*100)
         self.ui.o_fr.setValue(wyn[3]*100)
+        
+    def addLineToLog(self, what):
+        self.ui.o_log.appendPlainText('['+str(datetime.now())+'] ' + what)
         
