@@ -7,10 +7,10 @@ Zawiera pewne stałe używane w programie
 # Plik w którym znajduje się wartość parametrów treningowych
 PLIK_TRENINGOWY = 'test.txt'
 
-# Skróty nazw opbsłuiwanych państw
+# Skróty nazw obsługiwanych państw
 skroty_panstw = ('en', 'de', 'pl', 'fr')
 
-# Nazwy państw z przyporządzkowaniem skrótów
+# Nazwy państw z przyporządkowaniem skrótów
 nazwy_jezykow = {
                 'en': 'Angielski',
                 'de': 'Niemiecki',

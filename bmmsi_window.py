@@ -62,6 +62,10 @@ class BmmsiWindow(QWidget):
         
         """
         
+        if len (self.ui.o_zbiorTreningowy.text()) == 0:
+            QMessageBox.warning(None, "BMMSI", u"Należy podać istniejącą scieżkę")
+            return
+        
         gen = GenratorPlikuTestowego()
         gen.generuj(self.ui.o_zbiorTreningowy.text())
         

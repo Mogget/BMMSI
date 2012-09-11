@@ -28,6 +28,7 @@ def tworzMacierz(I, J, fill=0.0):
     return m
 
 def sigmoid(x):
+    """ fukcja sigmod """
     return math.tanh(x)
 
 
@@ -78,6 +79,7 @@ class SSN(QObject):
 
 
     def update(self, wejscie):
+        """ zmienia wartość wyjść na podstawie wjeść """
         
         if len(wejscie) != self.liczbaNeuronow[0] - 1:
             raise ValueError('liczba wejsc pliku testowego jest zla')
@@ -99,6 +101,13 @@ class SSN(QObject):
 
 
     def backPropagate(self, cel, N, M):
+        """
+        wykonuje algortym wsteznej propragacji błędów 
+        
+        N - współczynnik uczenia
+        M - współczynnik momentum
+        
+        """
         if len(cel) != self.liczbaNeuronow[-1]:
             raise ValueError('niepoprawna liczba wejsc w pliku testowym\
                     lub w tworzonej sieci')
@@ -135,6 +144,10 @@ class SSN(QObject):
     
 
     def test(self, wzorzec):
+        """
+        Przprowadza pomiar dla zadanego wzorca
+        
+        """
         wynik = self.update(wzorzec)
         #print wzorzec, '->', wynik, '\n'
        
@@ -146,6 +159,9 @@ class SSN(QObject):
 
 
     def wagi(self):
+        """
+        Wyświetla wagi wejściowe i wyjściowe
+        """
         print('Wagi wejsciowe:')
         for i in range(self.liczbaNeuronow[0]):
             print(self.wagi[0][i])
@@ -156,8 +172,14 @@ class SSN(QObject):
 
 
     def train(self, wzorzec, liczbaEpok=1000, N=0.5, M=0.1, min_blad=0.3):
-        # N: intensywność nauki
-        # M: współczynnik pędu (momentum)
+        """
+        Trenuje SSN dla zadanego wzorca,
+        przez zadaną liczbę epok lub do uzyskania 
+        oczekiwanej wartości błędu.
+        
+         N: intensywność nauki
+         M: współczynnik pędu (momentum)
+        """
         indeks = 2
         testowy = []
         plik = open(wzorzec)
@@ -201,6 +223,9 @@ class SSN(QObject):
 
 
 def demo():
+    """
+    Uruchamia silnik SSN bez GUI
+    """
     # Wersja demo silnika, bez GUI
     # Sieć z 4 warstawami
     # 25 - warswa wejściowa - czestoliwosc alfabetu lacinksiego
