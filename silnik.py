@@ -30,10 +30,12 @@ def dsigmoid(y):
     return 1.0 - y ** 2
 
 
-class SiecNeuronowa(object):
+class SSN(object):
     """docstring for SiecNeuronowa"""
+    
+
     def __init__(self, liczbaWarstw, liczbaNeuronow=[]):
-        super(SiecNeuronowa, self).__init__()
+        super(SSN, self).__init__()
         self.liczbaNeuronow = liczbaNeuronow
         self.liczbaNeuronow[0] += 1     # nie wiem czemu
 
@@ -41,6 +43,7 @@ class SiecNeuronowa(object):
         self.progAktywacji = []
         for neuron in self.liczbaNeuronow:
             self.progAktywacji.append([1.0] * neuron)
+
         # tworzenie wag
         self.wagi = []
         for licznik in range(len(self.liczbaNeuronow) - 1):
@@ -60,6 +63,7 @@ class SiecNeuronowa(object):
             self.zmianaWagi.append(tworzMacierz(self.liczbaNeuronow[licznik],\
                     self.liczbaNeuronow[licznik + 1]))
 
+
     def update(self, wejscie):
         if len(wejscie) != self.liczbaNeuronow[0] - 1:
             raise ValueError('liczba wejsc pliku testowego jest zla')
@@ -68,7 +72,8 @@ class SiecNeuronowa(object):
         for i in range(self.liczbaNeuronow[0] - 1):
             #self.ai[i] = sigmoid(inputs[i])
             self.progAktywacji[0][i] = wejscie[i]
-        # prog aktywacji warst dalszych
+            
+        # prog aktywacji warstw dalszych
         for licznik in range(len(self.liczbaNeuronow) - 1):
             for j in range(self.liczbaNeuronow[licznik + 1]):
                 sum = 0.0
@@ -77,6 +82,7 @@ class SiecNeuronowa(object):
                 self.progAktywacji[licznik + 1][j] = sigmoid(sum)
 
         return self.progAktywacji[-1][:]
+
 
     def backPropagate(self, cel, N, M):
         if len(cel) != self.liczbaNeuronow[-1]:
@@ -113,8 +119,11 @@ class SiecNeuronowa(object):
             error = error + 0.5 * (cel[k] - self.progAktywacji[-1][k]) ** 2
         return error
     
+
     def test(self, wzorzec):
         print wzorzec, '->', self.update(wzorzec), '\n'
+        return self.update(wzorzec)
+
 
     def weights(self):
         print('Input weights:')
@@ -124,6 +133,7 @@ class SiecNeuronowa(object):
         print('Output weights:')
         for j in range(self.liczbaNeuronow[-2]):
             print(self.wagi[-1][j])
+
 
     def train(self, wzorzec, liczbaEpok=1000, N=0.5, M=0.1):
         # N: learning rate
@@ -163,7 +173,7 @@ class SiecNeuronowa(object):
 def demo():
 
     # create a network with two input, two hidden, and one output nodes
-    n = SiecNeuronowa(3, [25, 40, 4])
+    n = SSN(4, [25, 40, 40, 4])
     # train it with some patterns
     n.train("test.txt")
     # test it

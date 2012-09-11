@@ -26,6 +26,156 @@
    <string>BMMSI - Wykrywanie języka</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>2) Trenning</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Zbiór treningowy</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="o_zbiorTreningowy"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="ib_zbiorTreningowy">
+          <property name="text">
+           <string>Wybierz</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ib_zbudujTrenujSiec">
+        <property name="text">
+         <string>Zbuduj i trenuj sieć</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>3) Działanie</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Tekst wejściowy</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPlainTextEdit" name="i_tekstWejsciowy"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="ib_testuj">
+        <property name="text">
+         <string>Testuj</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Wynik</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <layout class="QFormLayout" name="formLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_12">
+          <property name="text">
+           <string>Angielski:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Niemiecki:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_14">
+          <property name="text">
+           <string>Polski:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_15">
+          <property name="text">
+           <string>Francuski:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QProgressBar" name="o_en">
+          <property name="value">
+           <number>0</number>
+          </property>
+          <property name="invertedAppearance">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QProgressBar" name="o_de">
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QProgressBar" name="o_pl">
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QProgressBar" name="o_fr">
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>Log</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="o_log"/>
+     </item>
+    </layout>
+   </item>
    <item row="0" column="0" rowspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
@@ -42,7 +192,14 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QSpinBox" name="i_iloscWarstwUkrytych"/>
+         <widget class="QSpinBox" name="i_iloscWarstwUkrytych">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="value">
+           <number>1</number>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
@@ -52,7 +209,17 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QSpinBox" name="i_liczbaNeuronowWarstwaUkryta"/>
+         <widget class="QSpinBox" name="i_liczbaNeuronowWarstwaUkryta">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>25</number>
+          </property>
+         </widget>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_3">
@@ -62,37 +229,83 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QSpinBox" name="i_liczbaEpok"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Średni błąd limitu epoki</string>
+         <widget class="QSpinBox" name="i_liczbaEpok">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>1000000</number>
+          </property>
+          <property name="singleStep">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>100</number>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QDoubleSpinBox" name="i_sredniBladEpoki"/>
-        </item>
-        <item row="4" column="0">
+        <item row="3" column="0">
          <widget class="QLabel" name="label_5">
           <property name="text">
            <string>Współczynnik uczenia</string>
           </property>
          </widget>
         </item>
+        <item row="3" column="1">
+         <widget class="QDoubleSpinBox" name="i_wspolczynnikUczenia">
+          <property name="minimum">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.200000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Momentum</string>
+          </property>
+         </widget>
+        </item>
         <item row="4" column="1">
-         <widget class="QDoubleSpinBox" name="i_wspolczynnikUczenia"/>
+         <widget class="QDoubleSpinBox" name="i_wspolczynnikMomentum">
+          <property name="minimum">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.100000000000000</double>
+          </property>
+         </widget>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_6">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string>Liczba uczenia nuronu</string>
           </property>
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="QSpinBox" name="i_uczenieNeuronu"/>
+         <widget class="QSpinBox" name="i_uczenieNeuronu">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -172,93 +385,6 @@
       </item>
      </layout>
     </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>2) Trenning</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Zbiór treningowy</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="o_zbiorTreningowy"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="ib_zbiorTreningowy">
-          <property name="text">
-           <string>Wybierz</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QPushButton" name="ib_zbudujTrenujSiec">
-        <property name="text">
-         <string>Zbuduj i trenuj sieć</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QGroupBox" name="groupBox_3">
-     <property name="title">
-      <string>3) Działanie</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="2" column="0" colspan="2">
-       <widget class="QPlainTextEdit" name="i_tekstWejsciowy"/>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>Wynik</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="ib_testuj">
-        <property name="text">
-         <string>Testuj</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>Tekst wejściowy</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLineEdit" name="o_wynik"/>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_11">
-       <property name="text">
-        <string>Log</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPlainTextEdit" name="o_log"/>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
