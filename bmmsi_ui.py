@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'bmmsi.ui'
 #
-# Created: Tue Sep 11 20:28:54 2012
+# Created: Tue Sep 11 22:23:33 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -85,28 +85,6 @@ class Ui_Form(object):
         self.i_limiWartosciBledu.setObjectName(_fromUtf8("i_limiWartosciBledu"))
         self.formLayout.setWidget(6, QtGui.QFormLayout.FieldRole, self.i_limiWartosciBledu)
         self.verticalLayout.addLayout(self.formLayout)
-        self.formLayout_2 = QtGui.QFormLayout()
-        self.formLayout_2.setObjectName(_fromUtf8("formLayout_2"))
-        self.label_7 = QtGui.QLabel(self.groupBox)
-        self.label_7.setObjectName(_fromUtf8("label_7"))
-        self.formLayout_2.setWidget(0, QtGui.QFormLayout.LabelRole, self.label_7)
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.formLayout_2.setItem(1, QtGui.QFormLayout.LabelRole, spacerItem)
-        self.ic_sigmod = QtGui.QRadioButton(self.groupBox)
-        self.ic_sigmod.setChecked(True)
-        self.ic_sigmod.setObjectName(_fromUtf8("ic_sigmod"))
-        self.formLayout_2.setWidget(1, QtGui.QFormLayout.FieldRole, self.ic_sigmod)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.formLayout_2.setItem(2, QtGui.QFormLayout.LabelRole, spacerItem1)
-        self.ic_log = QtGui.QRadioButton(self.groupBox)
-        self.ic_log.setObjectName(_fromUtf8("ic_log"))
-        self.formLayout_2.setWidget(2, QtGui.QFormLayout.FieldRole, self.ic_log)
-        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.formLayout_2.setItem(3, QtGui.QFormLayout.LabelRole, spacerItem2)
-        self.ic_liniowa = QtGui.QRadioButton(self.groupBox)
-        self.ic_liniowa.setObjectName(_fromUtf8("ic_liniowa"))
-        self.formLayout_2.setWidget(3, QtGui.QFormLayout.FieldRole, self.ic_liniowa)
-        self.verticalLayout.addLayout(self.formLayout_2)
         self.gridLayout_3.addWidget(self.groupBox, 0, 0, 1, 1)
         self.groupBox_2 = QtGui.QGroupBox(Form)
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
@@ -202,10 +180,6 @@ class Ui_Form(object):
         self.label_4.setText(QtGui.QApplication.translate("Form", "Momentum", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Form", "Limit epok", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setText(QtGui.QApplication.translate("Form", "Limit wartości błędu", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("Form", "Funkcja", None, QtGui.QApplication.UnicodeUTF8))
-        self.ic_sigmod.setText(QtGui.QApplication.translate("Form", "Sigmod", None, QtGui.QApplication.UnicodeUTF8))
-        self.ic_log.setText(QtGui.QApplication.translate("Form", "Logarytmiczna", None, QtGui.QApplication.UnicodeUTF8))
-        self.ic_liniowa.setText(QtGui.QApplication.translate("Form", "Liniowa", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("Form", "2) Trenning", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("Form", "Zbiór treningowy", None, QtGui.QApplication.UnicodeUTF8))
         self.ib_zbiorTreningowy.setText(QtGui.QApplication.translate("Form", "Wybierz", None, QtGui.QApplication.UnicodeUTF8))
