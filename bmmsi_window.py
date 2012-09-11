@@ -104,11 +104,12 @@ class BmmsiWindow(QWidget):
             QMessageBox.warning(None, "BMMSI", u"Należy podać tekst.")
             return
 
+        wyn = [0,0,0,0]
         wyn = self.siec_neuronowa.test(czestotliwosc( self.ui.i_tekstWejsciowy.toPlainText()  ) )
-        self.ui.o_en.setValue(wyn[0]*100)
-        self.ui.o_de.setValue(wyn[1]*100)
-        self.ui.o_pl.setValue(wyn[2]*100)
-        self.ui.o_fr.setValue(wyn[3]*100)
+        self.ui.o_en.setValue(wyn[0]*100  if wyn[0] > 0 else 0)
+        self.ui.o_de.setValue(wyn[1]*100  if wyn[1] > 0 else 0)
+        self.ui.o_pl.setValue(wyn[2]*100  if wyn[2] > 0 else 0)
+        self.ui.o_fr.setValue(wyn[3]*100  if wyn[3] > 0 else 0)
         
     def addLineToLog(self, what):
         """
