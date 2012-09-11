@@ -6,8 +6,9 @@ Created on Sun Sep  9 18:13:31 2012
 """
 import sys
 
-import sip
-sip.setapi('QString', 2)
+# Odkomentować przed wysłaniem do repozytorium
+#import sip
+#sip.setapi('QString', 2)
 
 from PyQt4 import QtGui
 
