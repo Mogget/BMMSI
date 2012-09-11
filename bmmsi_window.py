@@ -56,7 +56,8 @@ class BmmsiWindow(QWidget):
         self.siec_neuronowa.train((QDir.currentPath()+QDir.separator()+"test.txt"),
                                   liczbaEpok=self.ui.i_liczbaEpok.value(),
                                   N=self.ui.i_wspolczynnikUczenia.value(),
-                                  M=self.ui.i_wspolczynnikMomentum.value())
+                                  M=self.ui.i_wspolczynnikMomentum.value(),
+                                  min_blad = self.ui.i_limiWartosciBledu.value() )
                                  
 
     def testCustomText(self):

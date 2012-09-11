@@ -152,7 +152,7 @@ class SSN(QObject):
             print(self.wagi[-1][j])
 
 
-    def train(self, wzorzec, liczbaEpok=1000, N=0.5, M=0.1):
+    def train(self, wzorzec, liczbaEpok=1000, N=0.5, M=0.1, min_blad=0.3):
         # N: learning rate
         # M: momentum factor
         indeks = 2
@@ -179,9 +179,14 @@ class SSN(QObject):
                     pass
                 self.update(wejscie)
                 error = error + self.backPropagate(cel, N, M)
+
+            if error <= min_blad:
+                break
                 
             if i % 50 == 0:
                 self.tekst_na_log.emit( 'Epoka: \t%5d error: %-.5f' % (i, error) )
+            if i == liczbaEpok-1:
+                self.tekst_na_log.emit( 'Epoka: \t%5d error: %-.5f' % (i+1, error) )
             if i % 100 == 0:
                 print 'Epoki\t%5d. error: %-.5f' % (i, error)
         #print wejscie
